@@ -15,12 +15,12 @@ namespace API.Data
             _mapper = mapper;
             _context = context;
         }
-
+        ///<summary>Deletes a specified article from the database.</summary>
         public void DeleteArticle()
         {
             throw new NotImplementedException();
         }
-
+        ///<returns>Searches and returns a specified article from the database</returns>
         public async Task<ArticleDto> GetArticle(int id)
         {
             return await _context.Articles
@@ -28,10 +28,12 @@ namespace API.Data
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
-
-        public Task<bool> SaveAllAsync()
+        
+        ///<summary>Saves changed to the database</summary>
+        ///<returns>A boolean indicating a successful or failed database save.</returns>
+        public async Task<bool> SaveAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

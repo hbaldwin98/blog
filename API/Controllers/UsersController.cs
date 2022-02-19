@@ -33,6 +33,8 @@ namespace API.Controllers
         {
             var user = await _userRepository.GetMemberByIdAsync(id);
 
+            if (user == null) return NotFound("User does not exist");
+
             return Ok(user);
         }
 
