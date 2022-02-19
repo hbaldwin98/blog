@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ArticlesService {
-  baseUrl = "https://localhost:5001";
+  baseUrl = "https://localhost:5001/";
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +18,10 @@ export class ArticlesService {
    * @memberof ArticlesService
    */
   getArticles() {
-    return this.http.get<Article[]>(this.baseUrl + '/Articles');
+    return this.http.get<Article[]>(this.baseUrl + 'Articles');
+  }
+
+  getArticle(title: string) {
+    return this.http.get<Article>(this.baseUrl + 'Articles/' + title);
   }
 }

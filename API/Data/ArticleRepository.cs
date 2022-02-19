@@ -1,7 +1,9 @@
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -16,15 +18,22 @@ namespace API.Data
             _context = context;
         }
         ///<summary>Deletes a specified article from the database.</summary>
-        public void DeleteArticle()
+        public void DeleteArticle(Article article)
         {
-            throw new NotImplementedException();
+            _context.Articles.Remove(article);
         }
         ///<returns>Searches and returns a specified article from the database</returns>
-        public async Task<ArticleDto> GetArticleAsync(int id)
+        public async Task<ArticleDto> GetArticleByIdAsync(int id)
         {
             return await _context.Articles
                 .Where(i => i.Id == id)
+                .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+        }
+        public async Task<ArticleDto> GetArticleByTitleAsync(string title)
+        {
+            return await _context.Articles
+                .Where(t => t.UrlIdentity == title)
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
@@ -35,7 +44,10 @@ namespace API.Data
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
-
+        public async Task<bool> ArticleExists(string articleUrl)
+        {
+            return await _context.Articles.AnyAsync(x => x.UrlIdentity == articleUrl);
+        }
         ///<summary>Saves changed to the database</summary>
         ///<returns>A boolean indicating a successful or failed database save.</returns>
         public async Task<bool> SaveAllAsync()

@@ -1,8 +1,10 @@
 using API.Data;
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -21,13 +23,13 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ArticleDto>> GetArticle(int id)
+        [HttpGet("{title}")]
+        public async Task<ActionResult<ArticleDto>> GetArticleTitle(string title)
         {
-            var article = await _articleRepository.GetArticleAsync(id);
+            var article = await _articleRepository.GetArticleByTitleAsync(title);
 
-            if (article == null) return NotFound("Article does not exist");
-            
+            if (article == null) return NotFound("Article does not exist.");
+
             return Ok(article);
         }
 
@@ -38,5 +40,22 @@ namespace API.Controllers
 
             return Ok(articles);
         }
+
+
+        [HttpDelete("delete-article/{id}")]
+        
+        public async Task<ActionResult> DeleteArticle(int id)
+        {
+            var article = await _context.Articles.SingleOrDefaultAsync(i => i.Id == id);
+
+            if (article == null) return NotFound("Article does not exist");
+
+            _articleRepository.DeleteArticle(article);
+
+            if (await _articleRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to delete article");
+        }
+
     }
 }

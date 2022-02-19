@@ -1,4 +1,4 @@
-export interface Comment {
+export interface UserComment {
   commenterName: string,
   contents: string,
   dateCommented: Date

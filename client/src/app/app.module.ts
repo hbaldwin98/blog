@@ -5,9 +5,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import { ArticleCardComponent } from './article-card/article-card.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ArticleListComponent } from './article-list/article-list.component';
+import { ArticleCardComponent } from './article/article-card/article-card.component';
+import { ArticleListComponent } from './article/article-list/article-list.component';
+import { ArticlePageComponent } from './article/article-page/article-page.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
     HomeComponent,
     ArticleCardComponent,
     ArticleListComponent,
-
+    ArticlePageComponent
   ],
   imports: [
     BrowserModule,

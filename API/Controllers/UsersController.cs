@@ -1,6 +1,7 @@
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +14,11 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public UsersController(DataContext context, IUserRepository userRepository, IMapper mapper)
+        private readonly IArticleRepository _articleRepository;
+        public UsersController(DataContext context, 
+            IUserRepository userRepository, IArticleRepository articleRepository, IMapper mapper)
         {
+            _articleRepository = articleRepository;
             _mapper = mapper;
             _context = context;
             _userRepository = userRepository;
@@ -68,9 +72,13 @@ namespace API.Controllers
                 
             if (user == null) return BadRequest("User does not exist");
 
+            if (await _articleRepository.ArticleExists(articleDto.Title.ConvertUrl())) 
+                return BadRequest("Article with that title already exists.");
+
             user.Articles.Add(new Article
             {
                 AuthorId = user.Id,
+                UrlIdentity = articleDto.Title.ConvertUrl(),
                 Title = articleDto.Title,
                 Contents = articleDto.Contents,
                 Tags = articleDto.Tags

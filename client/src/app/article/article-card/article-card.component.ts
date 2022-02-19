@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article } from '../_models/article';
+import { Article } from 'src/app/_models/article';
 
 
 @Component({
@@ -9,10 +9,14 @@ import { Article } from '../_models/article';
 })
 export class ArticleCardComponent implements OnInit {
   @Input() article!: Article;
-
+  month!: number;
+  year!: number;
   constructor() { }
 
   ngOnInit(): void {
+    this.article.dateCreated = new Date(this.article.dateCreated);
+    this.month = this.article.dateCreated.getMonth() + 1;
+    console.log(this.month);
   }
 
 }
