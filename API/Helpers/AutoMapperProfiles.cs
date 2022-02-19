@@ -14,6 +14,7 @@ namespace API.Helpers
             CreateMap<RegisterDto, User>();
             CreateMap<Article, ArticleDto>();
             CreateMap<ArticleDto, Article>();
+            CreateMap<CreateArticleDto, Article>();
             CreateMap<Comment, CommentDto>();
             CreateMap<CommentDto, Comment>();
             CreateMap<UpdateUserDto, User>();
