@@ -21,14 +21,21 @@ namespace API.Data
             throw new NotImplementedException();
         }
         ///<returns>Searches and returns a specified article from the database</returns>
-        public async Task<ArticleDto> GetArticle(int id)
+        public async Task<ArticleDto> GetArticleAsync(int id)
         {
             return await _context.Articles
                 .Where(i => i.Id == id)
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
-        
+
+        public async Task<IEnumerable<ArticleDto>> GetArticlesAsync()
+        {
+            return await _context.Articles
+                .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         ///<summary>Saves changed to the database</summary>
         ///<returns>A boolean indicating a successful or failed database save.</returns>
         public async Task<bool> SaveAllAsync()

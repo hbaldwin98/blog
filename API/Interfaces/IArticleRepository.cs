@@ -5,7 +5,8 @@ namespace API.Interfaces
 {
     public interface IArticleRepository
     {
-        public Task<ArticleDto> GetArticle(int id);
+        Task<IEnumerable<ArticleDto>> GetArticlesAsync();
+        public Task<ArticleDto> GetArticleAsync(int id);
         public void DeleteArticle();
         public Task<bool> SaveAllAsync();
     }

@@ -12,7 +12,8 @@ namespace API.Controllers
         private readonly IArticleRepository _articleRepository;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-        public ArticlesController(DataContext context, IArticleRepository articleRepository, IUserRepository userRepository, IMapper mapper)
+        public ArticlesController(DataContext context, IArticleRepository articleRepository, 
+                IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -23,11 +24,19 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ArticleDto>> GetArticle(int id)
         {
-            var article = await _articleRepository.GetArticle(id);
+            var article = await _articleRepository.GetArticleAsync(id);
 
             if (article == null) return NotFound("Article does not exist");
             
             return Ok(article);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ArticleDto>> GetArticles()
+        {
+            var articles = await _articleRepository.GetArticlesAsync();
+
+            return Ok(articles);
         }
     }
 }
