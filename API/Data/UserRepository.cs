@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -23,7 +24,14 @@ namespace API.Data
                 .ToListAsync();
         }
 
-        public async Task<UserDto> GetUserByIdAsync(int id) 
+        public async Task<User> GetUserByIdAsync(int id) 
+        {
+            return await _context.Users
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<UserDto> GetMemberByIdAsync(int id)
         {
             return await _context.Users
                 .Where(x => x.Id == id)
@@ -40,5 +48,11 @@ namespace API.Data
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
+
+        public void Update(User user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+        }
+
     }
 }

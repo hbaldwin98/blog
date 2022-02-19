@@ -29,11 +29,11 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetUsers(int id) 
+        public async Task<ActionResult> GetUser(int id) 
         {
-            var users = await _userRepository.GetUserByIdAsync(id);
+            var user = await _userRepository.GetMemberByIdAsync(id);
 
-            return Ok(users);
+            return Ok(user);
         }
 
         [HttpPost("add-user")]
@@ -91,6 +91,22 @@ namespace API.Controllers
             if (await _userRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to delete user");
+        }
+
+        [HttpPut("{id}")]
+
+        public async Task<ActionResult> UpdateUser(int id, UpdateUserDto userUpdate)
+        {
+            var user = await _userRepository.GetUserByIdAsync(id);
+
+            _mapper.Map(userUpdate, user);
+
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update user");
+
         }
     }
 }
