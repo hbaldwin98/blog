@@ -16,7 +16,6 @@ export class ArticleCardComponent implements OnInit {
   ngOnInit(): void {
     this.article.dateCreated = new Date(this.article.dateCreated);
     this.month = this.article.dateCreated.getMonth() + 1;
-    console.log(this.month);
   }
 
 }

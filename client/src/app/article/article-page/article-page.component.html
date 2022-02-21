@@ -1,21 +1,16 @@
-<div class="container">
-  <div class="header">
-    <h1>{{article.title}}</h1>
+<div class="header">
+  <h1>{{article.title}}</h1>
+</div>
+{{article.contents}}
+
+<div *ngIf="article.comments?.length != 0">
+  <h3>Comments</h3>
+  <div *ngFor="let comment of article.comments">
+    {{comment.contents}} <br>{{comment.commenterName}}
   </div>
-  {{article.contents}}
-
-  <div *ngIf="article.comments?.length != 0">
-    <h2>Comments</h2>
-    <div *ngFor="let comment of article.comments">
-      {{comment.contents}} <br>{{comment.commenterName}}
-    </div>
-
-  </div>
-
-  <div *ngIf="article.comments?.length == 0">
-    <h1>No comments! Be the first to comment here.</h1>
-  </div>
-
 
 </div>
 
+<div *ngIf="article.comments?.length == 0">
+  <h3>No comments! Be the first to comment here.</h3>
+</div>

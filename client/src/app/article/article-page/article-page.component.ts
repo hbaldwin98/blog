@@ -10,17 +10,12 @@ import { UserComment } from 'src/app/_models/usercomment';
 })
 export class ArticlePageComponent implements OnInit {
   @Input() article!: Article;
-  comments!: UserComment[];
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.data.subscribe((data => {
       this.article = data.article;
     }))
-    this.comments = this.article.comments;
-    this.comments.forEach(comment => {
-      console.log(comment.contents);
-    })
   }
 
 }

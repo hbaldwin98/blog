@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 
 import { Article } from './../_models/article';
 import { Injectable } from '@angular/core';
@@ -7,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ArticlesService {
-  baseUrl = "https://localhost:5001/";
+  baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
