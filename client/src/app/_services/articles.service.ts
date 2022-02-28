@@ -1,14 +1,16 @@
 import { environment } from './../../environments/environment';
-
+import { map, take } from 'rxjs/operators';
 import { Article } from './../_models/article';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticlesService {
   baseUrl = environment.apiUrl;
+  articlesCache: Article[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -19,10 +21,19 @@ export class ArticlesService {
    * @memberof ArticlesService
    */
   getArticles() {
-    return this.http.get<Article[]>(this.baseUrl + 'Articles');
+    if (this.articlesCache.length > 0) return of(this.articlesCache);
+
+    return this.http.get<Article[]>(this.baseUrl + 'Articles').pipe(map(response => {
+      this.articlesCache = response;
+      return response;
+    }));
   }
 
-  getArticle(title: string) {
-    return this.http.get<Article>(this.baseUrl + 'Articles/' + title);
+  getArticle(urlIdentity: string) {
+    const article = this.articlesCache.find(article => article.urlIdentity == urlIdentity);
+
+    if (article) return of(article);
+
+    return this.http.get<Article>(this.baseUrl + 'Articles/' + urlIdentity);
   }
 }
