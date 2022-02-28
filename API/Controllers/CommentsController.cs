@@ -27,11 +27,11 @@ namespace API.Controllers
             return Ok(comment);
         }
 
-        [HttpPost("post-comment/{id}")]
-        public async Task<ActionResult> PostComment(int id, CommentDto commentDto)
+        [HttpPost("post-comment/{urlIdentity}")]
+        public async Task<ActionResult> PostComment(string urlIdentity, CommentDto commentDto)
         {
             var article = await _context.Articles
-                .Where(i => i.Id == id)
+                .Where(i => i.UrlIdentity == urlIdentity)
                 .Include(c => c.Comments)
                 .SingleOrDefaultAsync();
 

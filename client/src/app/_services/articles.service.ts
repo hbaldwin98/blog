@@ -9,7 +9,7 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class ArticlesService {
-  baseUrl = environment.apiUrl;
+  private baseUrl = environment.apiUrl;
   articlesCache: Article[] = [];
 
   constructor(private http: HttpClient) { }
@@ -19,6 +19,7 @@ export class ArticlesService {
    *
    * @yields {Observable} Article[]
    * @memberof ArticlesService
+   * TODO: Change retrieval of articles to just retrieve Title, Date, and Author. Currently Receiving all comments even when unnecessary.
    */
   getArticles() {
     if (this.articlesCache.length > 0) return of(this.articlesCache);

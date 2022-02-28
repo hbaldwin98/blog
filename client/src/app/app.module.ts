@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ArticleCardComponent } from './article/article-card/article-card.component';
 import { ArticleListComponent } from './article/article-list/article-list.component';
 import { ArticlePageComponent } from './article/article-page/article-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,13 +18,15 @@ import { ArticlePageComponent } from './article/article-page/article-page.compon
     HomeComponent,
     ArticleCardComponent,
     ArticleListComponent,
-    ArticlePageComponent
+    ArticlePageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
