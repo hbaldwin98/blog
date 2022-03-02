@@ -26,7 +26,9 @@ export class ArticlePageComponent implements OnInit {
       this.article = data.article;
       this.comments = data.article.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
     }))
-
+    // ? scrolls the page down for the user if the the route contains a comments fragment
+    // ? this only works with a setTimeout, why?
+    // TODO: find better alternative if possible for scrolling
     this.route.fragment.subscribe(x => {
       if (x === "comments") {
         setTimeout(() => {
@@ -36,6 +38,7 @@ export class ArticlePageComponent implements OnInit {
     });
   }
 
+  // TODO: Make form actually use form builder. This is mostly redundant as of now.
   initializeForm() {
     this.commentForm = this.fb.group({
       commenterName: ['', Validators.required],

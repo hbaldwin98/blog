@@ -17,11 +17,11 @@ namespace API.Data
             _context = context;
         }
 
-        ///<returns>A list of all users as UserDto</returns>
-        public async Task<IEnumerable<UserDto>> GetUsersAsync()
+        ///<returns>A list of all users as MemberDto</returns>
+        public async Task<IEnumerable<MemberDto>> GetUsersAsync()
         {
             return await _context.Users
-                .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
         
@@ -33,11 +33,11 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
         ///<returns>Searches and returns a UserDto with a specified id from the database</returns>
-        public async Task<UserDto> GetMemberByIdAsync(int id)
+        public async Task<MemberDto> GetMemberByIdAsync(int id)
         {
             return await _context.Users
                 .Where(x => x.Id == id)
-                .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
         ///<summary>Saves changed to the database</summary>
@@ -58,5 +58,9 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified;
         }
 
+        public async Task<User> GetUserByNameAsync(string name)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.UserName == name);
+        }
     }
 }

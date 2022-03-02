@@ -1,8 +1,10 @@
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +15,16 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly IArticleRepository _articleRepository;
-        public UsersController(DataContext context, 
-            IUserRepository userRepository, IArticleRepository articleRepository, IMapper mapper)
+        private readonly ITokenService _tokenService;
+        public UsersController(DataContext context, IUserRepository userRepository, IMapper mapper, ITokenService tokenService)
         {
-            _articleRepository = articleRepository;
+            _tokenService = tokenService;
             _mapper = mapper;
             _context = context;
             _userRepository = userRepository;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetUsers() 
         {
@@ -41,27 +43,40 @@ namespace API.Controllers
             return Ok(user);
         }
 
-        [HttpPost("add-user")]
-        public async Task<ActionResult<RegisterDto>> AddUser(RegisterDto registerDto) 
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) 
         {
+            if (await _userRepository.UserExists(registerDto.Username)) return BadRequest("User with that username already exists");
+
             var user = _mapper.Map<User>(registerDto);
             user.UserName = user.UserName.ToLower();
-
-            if (await _userRepository.UserExists(registerDto.Username)) 
-                return BadRequest("User with that username already exists");
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return new RegisterDto
+            return new UserDto
             {
-                Username = user.UserName
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
             };
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+            
+            if (user == null) return Unauthorized("Invalid username");
 
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
+        }
+
+        [Authorize]
         [HttpDelete("delete-user/{id}")]
-
         public async Task<ActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.SingleOrDefaultAsync(i => i.Id == id);
@@ -74,12 +89,12 @@ namespace API.Controllers
             return BadRequest("Failed to delete user");
         }
 
-        [HttpPut("{id}")]
-
+        [Authorize]
+        [HttpPut]
         public async Task<ActionResult> UpdateUser(int id, UpdateUserDto userUpdate)
         {
-            var user = await _userRepository.GetUserByIdAsync(id);
-
+            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
+            
             _mapper.Map(userUpdate, user);
 
             _userRepository.Update(user);
