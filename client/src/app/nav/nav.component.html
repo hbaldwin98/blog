@@ -10,18 +10,6 @@
       <form class="form-inline my-2 my-md-0">
         <input type="text" class="search-click" placeholder="Search" />
       </form>
-  </div>
-    <div class="btn-group" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-      <button id="button-animated" dropdownToggle type="button" class="btn btn btn-primary dropdown-toggle"
-              aria-controls="dropdown-animated">
-        Admin Options<span class="caret"></span>
-      </button>
-      <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
-          role="menu" aria-labelledby="button-animated">
-        <li role="menuitem"><a class="dropdown-item" routerLink="new-article">New Article</a></li>
-        <li role="menuitem"><a class="dropdown-item" routerLink="/" (click)="accountService.logout()">Logout</a></li>
-      </ul>
     </div>
   </div>
 </nav>
-

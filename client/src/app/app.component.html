@@ -1,6 +1,16 @@
 <header></header>
 <a routerLink="login" style="color:black; opacity: 0.05; position:absolute;"><i class="fa-solid fa-lock"></i></a>
-
+<div class="btn-group-sm ml-5 mt-1" style="position:absolute;" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+  <button id="button-animated" dropdownToggle type="button" class="btn btn btn-primary dropdown-toggle"
+          aria-controls="dropdown-animated">
+    Admin Options<span class="caret"></span>
+  </button>
+  <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
+      role="menu" aria-labelledby="button-animated">
+    <li role="menuitem"><a class="dropdown-item" routerLink="new-article">New Article</a></li>
+    <li role="menuitem"><a class="dropdown-item" routerLink="/" (click)="accountService.logout()">Logout</a></li>
+  </ul>
+</div>
 <div class="container mt-3">
   <app-nav></app-nav>
   <hr>

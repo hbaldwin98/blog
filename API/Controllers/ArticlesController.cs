@@ -44,10 +44,10 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("delete-article/{id}")]
-        public async Task<ActionResult> DeleteArticle(int id)
+        [HttpDelete("delete-article/{url}")]
+        public async Task<ActionResult> DeleteArticle(string url)
         {
-            var article = await _context.Articles.SingleOrDefaultAsync(i => i.Id == id);
+            var article = await _context.Articles.SingleOrDefaultAsync(i => i.UrlIdentity == url);
 
             if (article == null) return NotFound("Article does not exist");
 
@@ -59,14 +59,11 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPost("post-article/{id}")]
-        public async Task<ActionResult> PostArticle(int id, CreateArticleDto articleDto)
+        [HttpPost]
+        public async Task<ActionResult> PostArticle(CreateArticleDto articleDto)
         {
 
-            var user = await _context.Users
-                .Where(i => i.Id == id)
-                .Include(a => a.Articles)
-                .SingleOrDefaultAsync();
+            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
                 
             if (user == null) return BadRequest("User does not exist");
 

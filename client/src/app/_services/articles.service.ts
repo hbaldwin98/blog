@@ -1,3 +1,4 @@
+import { CreateArticle } from './../_models/createArticle';
 import { environment } from './../../environments/environment';
 import { map, take } from 'rxjs/operators';
 import { Article } from './../_models/article';
@@ -36,5 +37,17 @@ export class ArticlesService {
     if (article) return of(article);
 
     return this.http.get<Article>(this.baseUrl + 'Articles/' + urlIdentity);
+  }
+
+  postArticle(article: CreateArticle) {
+    return this.http.post(this.baseUrl + 'articles', article).subscribe(response => {
+      return response;
+    })
+  }
+
+  deleteArticle(url: string) {
+    this.articlesCache = this.articlesCache.filter(u => u.urlIdentity !== url);
+
+    return this.http.delete(this.baseUrl + 'articles/delete-article/' + url).subscribe();
   }
 }

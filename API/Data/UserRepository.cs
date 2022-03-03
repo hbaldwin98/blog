@@ -32,6 +32,13 @@ namespace API.Data
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
         }
+        public async Task<User> GetUserByNameAsync(string name)
+        {
+            return await _context.Users
+                .Where(x => x.UserName == name)
+                .Include(a => a.Articles)
+                .SingleOrDefaultAsync();
+        }
         ///<returns>Searches and returns a UserDto with a specified id from the database</returns>
         public async Task<MemberDto> GetMemberByIdAsync(int id)
         {
@@ -58,9 +65,5 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified;
         }
 
-        public async Task<User> GetUserByNameAsync(string name)
-        {
-            return await _context.Users.FirstOrDefaultAsync(x => x.UserName == name);
-        }
     }
 }

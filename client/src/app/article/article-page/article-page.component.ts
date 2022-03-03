@@ -1,10 +1,11 @@
+import { ArticlesService } from 'src/app/_services/articles.service';
 import { AccountService } from './../../_services/account.service';
 import { UserComment } from 'src/app/_models/usercomment';
 import { CommentService } from './../../_services/comment.service';
 import { PostComment } from './../../_models/postComment';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ExtraOptions } from '@angular/router';
+import { ActivatedRoute, ExtraOptions, Router } from '@angular/router';
 import { Article } from 'src/app/_models/article';
 import { ViewportScroller } from '@angular/common';
 import { map } from 'rxjs/operators';
@@ -21,14 +22,14 @@ export class ArticlePageComponent implements OnInit {
   newComment!: PostComment;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private commentService: CommentService,
-      private viewportScroller: ViewportScroller, public accountService: AccountService) { }
+      private viewportScroller: ViewportScroller, public accountService: AccountService,
+      private articleService: ArticlesService, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
     this.route.data.subscribe((data => {
       this.article = data.article;
       this.comments = data.article.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
-      console.log(this.comments);
     }))
     // ? scrolls the page down for the user if the the route contains a comments fragment
     // ? this only works with a setTimeout, why?
@@ -80,6 +81,11 @@ export class ArticlePageComponent implements OnInit {
   deleteComment(id: number) {
     this.commentService.deleteComment(id);
     this.comments = this.comments.filter(c => c.id !== id);
+  }
+
+  deleteArticle() {
+    this.articleService.deleteArticle(this.article.urlIdentity);
+    this.router.navigateByUrl('/');
   }
 
   scrollToComments() {

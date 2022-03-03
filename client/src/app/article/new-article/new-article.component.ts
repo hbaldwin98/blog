@@ -1,3 +1,6 @@
+import { Router } from '@angular/router';
+import { ArticlesService } from 'src/app/_services/articles.service';
+import { CreateArticle } from './../../_models/createArticle';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-article.component.css']
 })
 export class NewArticleComponent implements OnInit {
+  newArticle: any = {};
 
-  constructor() { }
+  constructor(private articlesService: ArticlesService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  postArticle() {
+    this.articlesService.postArticle(this.newArticle);
+    this.router.navigateByUrl('/');
   }
 
 }
