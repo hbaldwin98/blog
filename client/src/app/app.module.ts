@@ -11,6 +11,8 @@ import { ArticleListComponent } from './article/article-list/article-list.compon
 import { ArticlePageComponent } from './article/article-page/article-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewArticleComponent } from './article/new-article/new-article.component';
+import { LoginComponent } from './login/login.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { NewArticleComponent } from './article/new-article/new-article.component
     ArticleListComponent,
     ArticlePageComponent,
     NewArticleComponent,
+    LoginComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

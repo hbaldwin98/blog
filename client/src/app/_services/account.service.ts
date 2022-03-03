@@ -26,6 +26,11 @@ export class AccountService {
     );
   }
 
+  logout() {
+    localStorage.removeItem('user');
+    this.currentUserSource.next(null!);
+  }
+
   setCurrentUser(user: User) {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
