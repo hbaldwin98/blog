@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [HttpPost("post-comment/{urlIdentity}")]
-        public async Task<ActionResult> PostComment(string urlIdentity, CommentDto commentDto)
+        public async Task<ActionResult> PostComment(string urlIdentity, CreateCommentDto commentDto)
         {
             var article = await _context.Articles
                 .Where(i => i.UrlIdentity == urlIdentity)
@@ -45,7 +45,7 @@ namespace API.Controllers
             
             _commentRepository.AddComment(comment, article);
 
-            if (await _commentRepository.SaveAllAsync()) return Ok();
+            if (await _commentRepository.SaveAllAsync()) return Ok(comment);
 
             return BadRequest("Error uploading comment");
         }

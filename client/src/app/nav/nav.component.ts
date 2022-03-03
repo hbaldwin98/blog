@@ -1,3 +1,4 @@
+import { AccountService } from './../_services/account.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  model: any = {};
 
-  constructor() { }
+  constructor(public accountService: AccountService) { }
 
   ngOnInit(): void {
+  }
+
+  login() {
+    this.accountService.login(this.model).subscribe((response) => { });
   }
 
 }

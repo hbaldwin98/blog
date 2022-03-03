@@ -1,3 +1,4 @@
+import { AccountService } from './../../_services/account.service';
 import { UserComment } from 'src/app/_models/usercomment';
 import { CommentService } from './../../_services/comment.service';
 import { PostComment } from './../../_models/postComment';
@@ -6,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ExtraOptions } from '@angular/router';
 import { Article } from 'src/app/_models/article';
 import { ViewportScroller } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-page',
@@ -18,13 +20,15 @@ export class ArticlePageComponent implements OnInit {
   commentForm!: FormGroup;
   newComment!: PostComment;
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private commentService: CommentService, private viewportScroller: ViewportScroller) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private commentService: CommentService,
+      private viewportScroller: ViewportScroller, public accountService: AccountService) { }
 
   ngOnInit(): void {
     this.initializeForm();
     this.route.data.subscribe((data => {
       this.article = data.article;
       this.comments = data.article.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
+      console.log(this.comments);
     }))
     // ? scrolls the page down for the user if the the route contains a comments fragment
     // ? this only works with a setTimeout, why?
@@ -57,17 +61,25 @@ export class ArticlePageComponent implements OnInit {
       commenterName: this.commentForm.value['commenterName'],
       contents: this.commentForm.value['content']
     }
-
-    if (this.commentService.postComment(this.newComment, this.article.urlIdentity)) {
-      let comment: UserComment = {
+    // send to comment to db and retrieve response containing the commment + it's db id
+    // map that id to a new comment that we push to the user's view
+    this.commentService.postComment(this.newComment, this.article.urlIdentity).pipe(map((comment: any) => {
+      let userComment: UserComment = {
         commenterName: this.newComment.commenterName,
+        id: comment.id,
         contents: this.newComment.contents,
         dateCommented: new Date(Date.now())
       }
 
-      this.comments.push(comment)
+      this.comments.push(userComment)
       this.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
-    }
+    })).subscribe();
+
+  }
+
+  deleteComment(id: number) {
+    this.commentService.deleteComment(id);
+    this.comments = this.comments.filter(c => c.id !== id);
   }
 
   scrollToComments() {

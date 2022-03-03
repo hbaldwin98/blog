@@ -41,6 +41,7 @@ namespace API.Data
         public async Task<IEnumerable<ArticleDto>> GetArticlesAsync()
         {
             return await _context.Articles
+                .Include(c => c.Comments)
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }

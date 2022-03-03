@@ -4,6 +4,7 @@ using API.Entities;
 using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,9 +43,8 @@ namespace API.Controllers
             return Ok(articles);
         }
 
-
+        [Authorize]
         [HttpDelete("delete-article/{id}")]
-        
         public async Task<ActionResult> DeleteArticle(int id)
         {
             var article = await _context.Articles.SingleOrDefaultAsync(i => i.Id == id);
@@ -58,6 +58,7 @@ namespace API.Controllers
             return BadRequest("Failed to delete article");
         }
 
+        [Authorize]
         [HttpPost("post-article/{id}")]
         public async Task<ActionResult> PostArticle(int id, CreateArticleDto articleDto)
         {
