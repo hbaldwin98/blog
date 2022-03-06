@@ -11,17 +11,17 @@ namespace API.Controllers
     public class CommentsController : BaseApiController
     {
         private readonly DataContext _context;
-        private readonly ICommentRepository _commentRepository;
-        public CommentsController(DataContext context, ICommentRepository commentRepository) 
+        private readonly IUnitOfWork _unitOfWork;
+        public CommentsController(DataContext context, IUnitOfWork unitOfWork) 
         { 
-            _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
             _context = context;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentDto>> GetComment(int id)
         {
-            var comment = await _commentRepository.GetComment(id);
+            var comment = await _unitOfWork.CommentRepository.GetComment(id);
 
             if (comment == null) return NotFound("Comment does not exist");
 
@@ -44,9 +44,9 @@ namespace API.Controllers
                 Contents = commentDto.Contents
             };
             
-            _commentRepository.AddComment(comment, article);
+            _unitOfWork.CommentRepository.AddComment(comment, article);
 
-            if (await _commentRepository.SaveAllAsync()) return Ok(comment);
+            if (await _unitOfWork.Update()) return Ok(comment);
 
             return BadRequest("Error uploading comment");
         }
@@ -58,9 +58,9 @@ namespace API.Controllers
                 var comment = await _context.Comments.FirstOrDefaultAsync(i => i.Id == id);
                 if (comment == null) return NotFound();
 
-                _commentRepository.DeleteComment(comment);
+                _unitOfWork.CommentRepository.DeleteComment(comment);
 
-                if (await _commentRepository.SaveAllAsync()) return Ok();
+                if (await _unitOfWork.Update()) return Ok();
 
                 return BadRequest("Failed to delete comment");
         }

@@ -11,6 +11,5 @@ namespace API.Interfaces
         Task<User> GetUserByNameAsync(string name);
         Task<bool> UserExists(string username);
         void Update(User user);
-        Task<bool> SaveAllAsync();
     }
 }

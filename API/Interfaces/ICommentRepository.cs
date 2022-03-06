@@ -8,6 +8,5 @@ namespace API.Interfaces
         void AddComment(Comment comment, Article article);
         void DeleteComment(Comment comment);
         Task<CommentDto> GetComment(int id);
-        Task<bool> SaveAllAsync();
     }
 }

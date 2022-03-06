@@ -12,23 +12,23 @@ namespace API.Controllers
 {
     public class UsersController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
-        public UsersController(DataContext context, IUserRepository userRepository, IMapper mapper, ITokenService tokenService)
+        private readonly IUnitOfWork _unitOfWork;
+        public UsersController(DataContext context, IUnitOfWork unitOfWork, IMapper mapper, ITokenService tokenService)
         {
+            _unitOfWork = unitOfWork;
             _tokenService = tokenService;
             _mapper = mapper;
             _context = context;
-            _userRepository = userRepository;
         }
 
         [Authorize]
         [HttpGet]
         public async Task<ActionResult> GetUsers() 
         {
-            var users = await _userRepository.GetUsersAsync();
+            var users = await _unitOfWork.UserRespository.GetUsersAsync();
 
             return Ok(users);
         }
@@ -36,7 +36,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser(int id) 
         {
-            var user = await _userRepository.GetMemberByIdAsync(id);
+            var user = await _unitOfWork.UserRespository.GetMemberByIdAsync(id);
 
             if (user == null) return NotFound("User does not exist");
 
@@ -46,7 +46,7 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) 
         {
-            if (await _userRepository.UserExists(registerDto.Username)) return BadRequest("User with that username already exists");
+            if (await _unitOfWork.UserRespository.UserExists(registerDto.Username)) return BadRequest("User with that username already exists");
 
             var user = _mapper.Map<User>(registerDto);
             user.UserName = user.UserName.ToLower();
@@ -84,7 +84,7 @@ namespace API.Controllers
 
             _context.Users.Remove(user);
 
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Update()) return Ok();
 
             return BadRequest("Failed to delete user");
         }
@@ -93,13 +93,13 @@ namespace API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateUser(int id, UpdateUserDto userUpdate)
         {
-            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRespository.GetUserByNameAsync(User.GetUsername());
 
             _mapper.Map(userUpdate, user);
 
-            _userRepository.Update(user);
+            _unitOfWork.UserRespository.Update(user);
 
-            if (await _userRepository.SaveAllAsync()) return NoContent();
+            if (await _unitOfWork.Update()) return NoContent();
 
             return BadRequest("Failed to update user");
         }

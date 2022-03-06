@@ -35,11 +35,5 @@ namespace API.Data
                 .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
-        ///<summary>Saves changed to the database</summary>
-        ///<returns>A boolean indicating a successful or failed database save.</returns>
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
     }
 }

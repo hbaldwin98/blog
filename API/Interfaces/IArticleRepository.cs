@@ -10,6 +10,5 @@ namespace API.Interfaces
         public Task<ArticleDto> GetArticleByTitleAsync(string title);
         public void DeleteArticle(Article article);
         public Task<bool> ArticleExists(string articleUrl);
-        public Task<bool> SaveAllAsync();
     }
 }

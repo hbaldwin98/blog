@@ -13,22 +13,19 @@ namespace API.Controllers
     public class ArticlesController : BaseApiController
     {
         private readonly DataContext _context;
-        private readonly IArticleRepository _articleRepository;
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
-        public ArticlesController(DataContext context, IArticleRepository articleRepository, 
-                IUserRepository userRepository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        public ArticlesController(DataContext context, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _articleRepository = articleRepository;
             _context = context;
         }
 
         [HttpGet("{title}")]
         public async Task<ActionResult<ArticleDto>> GetArticleTitle(string title)
         {
-            var article = await _articleRepository.GetArticleByTitleAsync(title);
+            var article = await _unitOfWork.ArticleRepository.GetArticleByTitleAsync(title);
 
             if (article == null) return NotFound("Article does not exist.");
 
@@ -38,7 +35,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<ArticleDto>> GetArticles()
         {
-            var articles = await _articleRepository.GetArticlesAsync();
+            var articles = await _unitOfWork.ArticleRepository.GetArticlesAsync();
 
             return Ok(articles);
         }
@@ -51,9 +48,9 @@ namespace API.Controllers
 
             if (article == null) return NotFound("Article does not exist");
 
-            _articleRepository.DeleteArticle(article);
+            _unitOfWork.ArticleRepository.DeleteArticle(article);
 
-            if (await _articleRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Update()) return Ok();
 
             return BadRequest("Failed to delete article");
         }
@@ -63,11 +60,11 @@ namespace API.Controllers
         public async Task<ActionResult> PostArticle(CreateArticleDto articleDto)
         {
 
-            var user = await _userRepository.GetUserByNameAsync(User.GetUsername());
+            var user = await _unitOfWork.UserRespository.GetUserByNameAsync(User.GetUsername());
                 
             if (user == null) return BadRequest("User does not exist");
 
-            if (await _articleRepository.ArticleExists(articleDto.Title.ConvertUrl())) 
+            if (await _unitOfWork.ArticleRepository.ArticleExists(articleDto.Title.ConvertUrl())) 
                 return BadRequest("Article with that title already exists.");
 
             var article = new Article
@@ -81,7 +78,7 @@ namespace API.Controllers
 
             user.Articles.Add(article);
 
-            if (await _userRepository.SaveAllAsync()) return Ok(_mapper.Map<ArticleDto>(article));
+            if (await _unitOfWork.Update()) return Ok(_mapper.Map<ArticleDto>(article));
 
             return BadRequest("Failed to create article");
         }

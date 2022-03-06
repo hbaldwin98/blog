@@ -47,12 +47,6 @@ namespace API.Data
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
-        ///<summary>Saves changed to the database</summary>
-        ///<returns>A boolean indicating a successful or failed database save.</returns>
-        public async Task<bool> SaveAllAsync() 
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
         ///<summary>Searches the database for a user with the specified username</summary>
         ///<returns>A boolean indicating whether the user exists or not.</returns>
         public async Task<bool> UserExists(string username)
