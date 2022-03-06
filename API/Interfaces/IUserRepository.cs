@@ -6,10 +6,10 @@ namespace API.Interfaces
     public interface IUserRepository
     {
         Task<IEnumerable<MemberDto>> GetUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
+        Task<AppUser> GetUserByIdAsync(int id);
         Task<MemberDto> GetMemberByIdAsync(int id);
-        Task<User> GetUserByNameAsync(string name);
+        Task<AppUser> GetUserByNameAsync(string name);
         Task<bool> UserExists(string username);
-        void Update(User user);
+        void Update(AppUser user);
     }
 }

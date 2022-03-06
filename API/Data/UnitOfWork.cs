@@ -14,9 +14,7 @@ namespace API.Data
         }
 
         public IUserRepository UserRespository => new UserRepository(_context, _mapper);
-
         public ICommentRepository CommentRepository => new CommentRepository(_context, _mapper);
-
         public IArticleRepository ArticleRepository => new ArticleRepository(_context, _mapper);
 
         public bool HasChanges()

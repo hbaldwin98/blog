@@ -9,9 +9,9 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<MemberDto, User>();
-            CreateMap<User, MemberDto>();
-            CreateMap<RegisterDto, User>();
+            CreateMap<MemberDto, AppUser>();
+            CreateMap<AppUser, MemberDto>();
+            CreateMap<RegisterDto, AppUser>();
             CreateMap<Article, ArticleDto>();
             CreateMap<ArticleDto, Article>();
             CreateMap<CreateArticleDto, Article>();
@@ -19,7 +19,7 @@ namespace API.Helpers
             CreateMap<CommentDto, Comment>();
             CreateMap<Comment, CreateCommentDto>();
             CreateMap<CreateCommentDto, Comment>();
-            CreateMap<UpdateUserDto, User>();
+            CreateMap<UpdateUserDto, AppUser>();
         }
     }
 }

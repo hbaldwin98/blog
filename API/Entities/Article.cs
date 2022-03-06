@@ -8,7 +8,7 @@ namespace API.Entities
         public int Id { get; set; }
         public string Title { get; set; }
         public string UrlIdentity { get; set; }
-        public User Author { get; set; }
+        public AppUser Author { get; set; }
         public int AuthorId { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime DateEdited { get; set; } = DateTime.Now;

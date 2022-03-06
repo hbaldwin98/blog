@@ -26,13 +26,13 @@ namespace API.Data
         }
         
         ///<returns>Searches and returns a User with a specified id from the database</returns>
-        public async Task<User> GetUserByIdAsync(int id) 
+        public async Task<AppUser> GetUserByIdAsync(int id) 
         {
             return await _context.Users
                 .Where(x => x.Id == id)
                 .SingleOrDefaultAsync();
         }
-        public async Task<User> GetUserByNameAsync(string name)
+        public async Task<AppUser> GetUserByNameAsync(string name)
         {
             return await _context.Users
                 .Where(x => x.UserName == name)
@@ -54,7 +54,7 @@ namespace API.Data
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
         ///<summary>Flags the user entry as a modified entry in the database.</summary>
-        public void Update(User user)
+        public void Update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified;
         }

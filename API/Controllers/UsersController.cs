@@ -43,37 +43,6 @@ namespace API.Controllers
             return Ok(user);
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto) 
-        {
-            if (await _unitOfWork.UserRespository.UserExists(registerDto.Username)) return BadRequest("User with that username already exists");
-
-            var user = _mapper.Map<User>(registerDto);
-            user.UserName = user.UserName.ToLower();
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
-            };
-        }
-
-        [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
-        {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
-            
-            if (user == null) return Unauthorized("Invalid username");
-
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
-            };
-        }
 
         [Authorize]
         [HttpDelete("delete-user/{id}")]
