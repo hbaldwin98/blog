@@ -3,7 +3,7 @@ import { UserComment } from "./usercomment";
 export interface Article {
   title: string,
   urlIdentity: string,
-  authorName: string,
+  authorPublicName: string,
   contents: string,
   dateCreated: Date,
   dateEdited: Date,
