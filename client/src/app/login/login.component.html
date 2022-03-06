@@ -7,8 +7,8 @@
 
 <div *ngIf="(accountService.currentUser$ | async) === null" class="container text-center mt-2">
   <h1>Please enter your Username and Password</h1>
-  <div class="row justify-content-center mt-4">
-    <form  #loginForm="ngForm" class="form" (ngSubmit)="login()"
+  <div class="d-flex justify-content-center mt-4">
+    <form  #loginForm="ngForm" (ngSubmit)="login()"
     autocomplete="off">
     <input
             name="username"

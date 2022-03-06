@@ -3,7 +3,6 @@ using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -42,6 +41,7 @@ namespace API.Data
         {
             return await _context.Articles
                 .Include(c => c.Comments)
+                .OrderByDescending(d => d.DateCreated)
                 .ProjectTo<ArticleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }

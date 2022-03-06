@@ -21,3 +21,13 @@
   overflow: hidden;
   position: relative;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+small.author:hover {
+  font-weight: 500;
+  cursor:pointer;
+}

@@ -70,16 +70,18 @@ namespace API.Controllers
             if (await _articleRepository.ArticleExists(articleDto.Title.ConvertUrl())) 
                 return BadRequest("Article with that title already exists.");
 
-            user.Articles.Add(new Article
+            var article = new Article
             {
                 AuthorId = user.Id,
                 UrlIdentity = articleDto.Title.ConvertUrl(),
                 Title = articleDto.Title,
                 Contents = articleDto.Contents,
                 Tags = articleDto.Tags
-            });
+            };
 
-            if (await _userRepository.SaveAllAsync()) return Ok();
+            user.Articles.Add(article);
+
+            if (await _userRepository.SaveAllAsync()) return Ok(_mapper.Map<ArticleDto>(article));
 
             return BadRequest("Failed to create article");
         }

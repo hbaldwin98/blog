@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { ArticlesService } from 'src/app/_services/articles.service';
-import { CreateArticle } from './../../_models/createArticle';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -17,7 +16,7 @@ export class NewArticleComponent implements OnInit {
   }
 
   postArticle() {
-    this.articlesService.postArticle(this.newArticle);
+    this.articlesService.postArticle(this.newArticle).subscribe(() => {});
     this.router.navigateByUrl('/');
   }
 

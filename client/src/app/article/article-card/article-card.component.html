@@ -1,14 +1,21 @@
 <!-- TODO Improve U.I. -->
-<div class="card" style="width: 300px">
-  <div class="card-img-wrapper">
-    <a routerLink="/articles/{{article.urlIdentity}}">
+<div class="card" style="width: 300px; height: 100%;">
+  <a routerLink="/articles/{{article.urlIdentity}}">
+    <div class="card-img-wrapper">
       <img src="{{'./assets/default.jpg'}}" alt="{{article.title}}" class="card-img-top">
-    </a>
+    </div>
+  </a>
+
+  <div class="card-body p-2 mt-2">
+    <a routerLink="/articles/{{article.urlIdentity}}"><h6 class="card-title text-center mb-1">{{article.title}}</h6></a>
   </div>
-  <div class="card-body p-1 mt-1">
-    <h6 class="card-title text-center mb-1">{{article.title}}</h6>
-    <!-- TODO Add navigation to Author page -->
-    <div class="card-text text-muted text-left">{{article.dateCreated | date}}</div>
-    <div class="card-text text-muted text-left">{{article.authorName}}</div>
+
+  <div class="card-footer mt-2">
+    <small class="card-text text-muted float-start">
+      {{article.dateCreated | date}}
+    </small>
+    <small class="card-text author text-muted float-end" routerLink="/users/{{article.authorName}}">
+      {{article.authorName}}
+    </small>
   </div>
 </div>

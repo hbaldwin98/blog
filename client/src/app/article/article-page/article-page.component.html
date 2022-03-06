@@ -1,9 +1,9 @@
 <div class="col header mb-2">
   <h1>{{article.title}}</h1>
-  <span class="text-muted"> By {{article.authorName}}, {{article.dateCreated | date : 'short'}}
-    <span *ngIf="comments.length > 0">
+  <span class="text-muted"> By <span class="author" routerLink="/users/{{article.authorName}}">{{article.authorName}}</span>, {{article.dateCreated | date : 'short'}}
+    <span *ngIf="article.comments.length > 0">
       <a (click)="scrollToComments()" routerLink="./" fragment="comments" style="text-decoration: none;"><i
-          class="fa fa-envelope ml-3"></i> {{comments.length}}</a>
+          class="fa fa-envelope ml-3"></i> {{article.comments.length}}</a>
     </span>
   </span>
   <div class="mt-2">
@@ -20,20 +20,20 @@
 
 <div class="container">
   <form [formGroup]="commentForm" (ngSubmit)="commentForm.valid && postComment()">
-    <div class="form-group">
+    <div>
       <label for="commenterName">Name</label>
       <input type="text" class="form-control" formControlName="commenterName" placeholder="Enter your name" required>
     </div>
-    <div class="form-group">
+    <div>
       <label for="content">Comment</label>
       <textarea type="text" class="form-control" formControlName="content" placeholder="Enter your comment" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Post Comment</button>
+    <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
   </form>
   <hr>
-  <div *ngIf="comments?.length != 0">
+  <div *ngIf="article.comments?.length != 0">
     <h3 id="comments">Comments</h3>
-    <div class="border p-2 m-1" *ngFor="let comment of comments">
+    <div class="border p-2 m-1" *ngFor="let comment of article.comments">
       <h4>{{comment.commenterName}}</h4>
       {{comment.contents}} <br> <small class="text-muted">Posted on {{comment.dateCommented | date : 'short'}}</small>
       <button class="btn btn-sm btn-danger mx-2" *ngIf="(accountService.currentUser$ | async) as user" (click)="deleteComment(comment.id)">Delete Comment?</button>

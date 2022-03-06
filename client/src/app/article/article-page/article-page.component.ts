@@ -17,7 +17,6 @@ import { map } from 'rxjs/operators';
 })
 export class ArticlePageComponent implements OnInit {
   @Input() article!: Article;
-  comments!: UserComment[];
   commentForm!: FormGroup;
   newComment!: PostComment;
 
@@ -29,7 +28,7 @@ export class ArticlePageComponent implements OnInit {
     this.initializeForm();
     this.route.data.subscribe((data => {
       this.article = data.article;
-      this.comments = data.article.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
+      this.article.comments = data.article.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
     }))
     // ? scrolls the page down for the user if the the route contains a comments fragment
     // ? this only works with a setTimeout, why?
@@ -72,15 +71,15 @@ export class ArticlePageComponent implements OnInit {
         dateCommented: new Date(Date.now())
       }
 
-      this.comments.push(userComment)
-      this.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
+      this.article.comments.push(userComment)
+      this.article.comments.sort((a: UserComment, b: UserComment) => new Date(b.dateCommented).getTime() - new Date(a.dateCommented).getTime());
     })).subscribe();
 
   }
 
   deleteComment(id: number) {
     this.commentService.deleteComment(id);
-    this.comments = this.comments.filter(c => c.id !== id);
+    this.article.comments = this.article.comments.filter(c => c.id !== id);
   }
 
   deleteArticle() {

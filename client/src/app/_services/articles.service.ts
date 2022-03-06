@@ -40,14 +40,14 @@ export class ArticlesService {
   }
 
   postArticle(article: CreateArticle) {
-    return this.http.post(this.baseUrl + 'articles', article).subscribe(response => {
-      return response;
-    })
+    return this.http.post(this.baseUrl + 'articles', article).pipe(map((response: Article | any) => {
+      this.articlesCache.unshift(response);
+    }))
   }
 
   deleteArticle(url: string) {
-    this.articlesCache = this.articlesCache.filter(u => u.urlIdentity !== url);
-
-    return this.http.delete(this.baseUrl + 'articles/delete-article/' + url).subscribe();
+    return this.http.delete(this.baseUrl + 'articles/delete-article/' + url).subscribe(() => {
+      this.articlesCache = this.articlesCache.filter(u => u.urlIdentity !== url);
+    });
   }
 }
