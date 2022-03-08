@@ -1,5 +1,9 @@
-<div class="d-flex justify-content-center flex-wrap mt-3 mx-auto">
-  <div class="mx-3 mb-4" *ngFor="let article of articles">
+<div class="row">
+  <app-article-featured-card [article]="articles[0]"></app-article-featured-card>
+</div>
+<hr>
+<div class="row row-cols-sm-1 row-cols-md-2 row-cols-xl-3 g-4 mt-3 text-center">
+  <div class="col mb-4" *ngFor="let article of articles | slice:1">
     <app-article-card [article]="article"></app-article-card>
   <div>
 </div>

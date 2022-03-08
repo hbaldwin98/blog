@@ -16,6 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FooterComponent } from './footer/footer.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { ArticleFeaturedCardComponent } from './article/article-featured-card/article-featured-card.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { JwtInterceptor } from './_interceptors/jwt.interceptor';
     LoginComponent,
     NotFoundComponent,
     FooterComponent,
+    ArticleFeaturedCardComponent,
   ],
   imports: [
     BrowserModule,
