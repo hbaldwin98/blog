@@ -16,8 +16,7 @@ export class NewArticleComponent implements OnInit {
   }
 
   postArticle() {
-    this.articlesService.postArticle(this.newArticle).subscribe(() => {});
-    this.router.navigateByUrl('/');
+    this.articlesService.postArticle(this.newArticle).subscribe(() => {this.router.navigateByUrl('/');});
   }
 
 }

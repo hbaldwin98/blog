@@ -46,8 +46,8 @@ export class ArticlesService {
   }
 
   deleteArticle(url: string) {
-    return this.http.delete(this.baseUrl + 'articles/delete-article/' + url).subscribe(() => {
+    return this.http.delete(this.baseUrl + 'articles/delete-article/' + url).pipe(map(() => {
       this.articlesCache = this.articlesCache.filter(u => u.urlIdentity !== url);
-    });
+    }));
   }
 }

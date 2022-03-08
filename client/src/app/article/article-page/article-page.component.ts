@@ -83,8 +83,10 @@ export class ArticlePageComponent implements OnInit {
   }
 
   deleteArticle() {
-    this.articleService.deleteArticle(this.article.urlIdentity);
-    this.router.navigateByUrl('/');
+    this.articleService.deleteArticle(this.article.urlIdentity).subscribe(() => {
+      this.router.navigateByUrl('/');
+    });
+
   }
 
   scrollToComments() {
