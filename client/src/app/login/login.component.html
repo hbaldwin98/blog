@@ -10,22 +10,25 @@
   <div class="d-flex justify-content-center mt-4">
     <form  [formGroup]="loginForm" (ngSubmit)="login()" autocomplete="off">
     <input
-            id="username"
-            name="username"
+            [class.is-invalid]="loginForm.controls['username'].touched && loginForm.controls['username'].invalid"
             class="form-control"
             type="text"
             placeholder="Username"
             style="width:300px;"
             formControlName="username">
-    <div *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched" style="color:red;">Please enter a username</div>
+    <div *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched" class="text-danger">Please enter a username</div>
     <input
-            name="password"
+            [class.is-invalid]="loginForm.controls['password'].touched && loginForm.controls['password'].invalid"
             class="form-control mt-1"
             type="password"
             placeholder="Password"
             formControlName="password"
             style="width:300px;">
-    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" style="color:red;">Please enter a password</div>
+    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="text-danger">Please enter a password</div>
+    <div class="text-danger" *ngIf="validationError && loginForm.dirty">
+      Invalid username or password
+    </div>
+
     <button class="btn btn-success my-2" [disabled]="!loginForm.valid" type="submit" style="width:50%">Login</button>
     </form>
   </div>

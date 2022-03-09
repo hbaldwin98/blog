@@ -42,7 +42,6 @@ export class ArticlePageComponent implements OnInit {
     });
   }
 
-  // TODO: Make form actually use form builder. This is mostly redundant as of now.
   initializeForm() {
     this.commentForm = this.fb.group({
       commenterName: ['', Validators.required],

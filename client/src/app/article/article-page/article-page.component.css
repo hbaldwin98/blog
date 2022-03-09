@@ -1,4 +1,19 @@
 span.author:hover {
-  font-weight: 500;
+  font-weight: 600;
   cursor:pointer;
 }
+
+.button-disabled button {
+  opacity: 0.4;
+  transition: ease-in 0.2s;
+}
+
+.button-disabled:hover {
+  cursor:not-allowed;
+}
+.button-disabled:hover button {
+  cursor:not-allowed;
+  opacity: 0.5;
+  transition: ease-in-out 0.2s;
+}
+

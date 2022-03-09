@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   model: any = {};
   loginForm!: FormGroup;
-
+  validationError = false;
   constructor(public accountService: AccountService, private routr: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.accountService.login(this.loginForm.value).subscribe((response) => {
         this.routr.navigateByUrl('/');
+     }, () => {
+       this.validationError = true;
      });
     }
   }
@@ -37,5 +39,4 @@ export class LoginComponent implements OnInit {
   logout() {
     this.accountService.logout();
   }
-
 }
