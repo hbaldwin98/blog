@@ -1,9 +1,10 @@
 <div class="row" *ngIf="articles">
   <app-article-featured-card [article]="articles[0]"></app-article-featured-card>
+  <div *ngIf="articles.length > 1" class="row row-cols-sm-1 row-cols-md-2 row-cols-xl-3 g-4 mt-3 text-center border-top">
+    <div class="col mb-4" *ngFor="let article of articles | slice:1">
+      <app-article-card [article]="article"></app-article-card>
+    <div>
+  </div>
 </div>
-<hr>
-<div class="row row-cols-sm-1 row-cols-md-2 row-cols-xl-3 g-4 mt-3 text-center">
-  <div class="col mb-4" *ngFor="let article of articles | slice:1">
-    <app-article-card [article]="article"></app-article-card>
-  <div>
-</div>
+
+

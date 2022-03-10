@@ -1,4 +1,4 @@
-<div class="col-md-10 col-lg-8 header mb-5 mx-auto">
+<div class="col-md-11 col-lg-9 header mb-5 mx-auto">
   <h1 class="mb-4">{{article.title}}</h1>
   <span class="text-muted"> By <span class="author"
       routerLink="/users/{{article.authorPublicName}}">{{article.authorPublicName}}</span>, {{article.dateCreated | date
@@ -8,19 +8,19 @@
           class="fa fa-envelope ms-3"></i> {{article.comments.length}}</a>
     </span>
   </span>
-  <div class="mt-2">
-    <button class="btn btn-sm btn-danger" *ngIf="(accountService.currentUser$ | async) as user"
+  <span class="float-end">
+    <button class="btn btn-sm btn-outline-danger" *ngIf="(accountService.currentUser$ | async) as user"
       (click)="deleteArticle()">Delete Article</button>
-  </div>
+  </span>
   <hr>
 </div>
 
-<div class="col-sm-12 col-md-10 col-lg-8 body mx-auto mb-5">
+<div class="col-12 col-md-11 col-lg-9 body mx-auto mb-5">
   {{article.contents}}
 </div>
 
 <!-- TODO move entire comment block to it's own component -->
-<div class="container col-sm-12 col-md-10 col-lg-8 ">
+<div class="col-12 col-md-11 col-lg-9 mx-auto">
   <form [formGroup]="commentForm" (ngSubmit)="commentForm.valid && postComment()">
     <div>
       <label for="commenterName">Name</label>
@@ -37,24 +37,21 @@
 
   </form>
   <hr>
-  <div *ngIf="article.comments?.length !== 0">
-    <h3 id="comments" *ngIf="article.comments.length === 1; else comments">{{article.comments.length}} Comment:</h3>
-    <ng-template id="comments" #comments>
-      <h3>{{article.comments.length}} Comments:</h3>
-    </ng-template>
-    <div class="border p-2 m-1 mt-3" *ngFor="let comment of article.comments">
+  <h3 *ngIf="article.comments?.length === 1">{{article.comments.length}} Comment:</h3>
+  <h3 *ngIf="article.comments!.length > 1">{{article.comments.length}} Comments:</h3>
+  <div *ngIf="article.comments?.length === 0">
+    <h3>No comments! Be the first to comment here.</h3>
+  </div>
+  <div class="border-start" border-start id="comments" *ngIf="article.comments?.length !== 0">
+    <div class="p-2 m-1 mt-3" *ngFor="let comment of article.comments">
       <small class="text-muted">Posted on {{comment.dateCommented | date : 'short'}}</small>
       <h4>{{comment.commenterName}}</h4>
       {{comment.contents}}
       <br>
       <button class="btn btn-sm btn-outline-primary mt-2 mb-1">Reply</button>
 
-      <button class="btn btn-sm btn-danger mx-2" *ngIf="(accountService.currentUser$ | async) as user"
-        (click)="deleteComment(comment.id)">Delete Comment?</button>
+      <button class="btn btn-sm btn-outline-danger mt-1 mx-2" *ngIf="(accountService.currentUser$ | async) as user"
+        (click)="deleteComment(comment.id)">Delete Comment</button>
     </div>
-  </div>
-
-  <div *ngIf="article.comments?.length == 0">
-    <h3>No comments! Be the first to comment here.</h3>
   </div>
 </div>

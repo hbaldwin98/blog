@@ -4,4 +4,11 @@
 * {
   font-family: 'Montserrat', 'Quando';
   font-size: 18px;
+
+}
+
+@media (min-width: 600px) {
+  * {
+    font-size: 18px;
+  }
 }

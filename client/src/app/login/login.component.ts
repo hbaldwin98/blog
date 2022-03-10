@@ -1,8 +1,7 @@
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from './../_services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -29,9 +28,9 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.accountService.login(this.loginForm.value).subscribe((response) => {
         this.routr.navigateByUrl('/');
-     }, () => {
-       this.validationError = true;
-     });
+      }, () => {
+        this.validationError = true;
+      });
     }
   }
 
