@@ -1,6 +1,6 @@
 <div class="col-md-11 col-lg-9 header mb-4 mx-auto">
-  <h1 class="mb-4">{{article.title}}</h1>
-  <span class="text-muted"> By <span class="author"
+  <h1 class="mb-2">{{article.title}}</h1>
+  <span class="text-muted ms-2"> By <span class="author"
       routerLink="/users/{{article.authorPublicName}}">{{article.authorPublicName}}</span>, {{article.dateCreated | date
     : 'short'}}
     <span *ngIf="article.comments.length > 0">
@@ -15,7 +15,7 @@
   <hr>
 </div>
 
-<div class="col-12 col-md-11 col-lg-8 body mx-auto mb-4" [innerHTML]="article.contents"> </div>
+<div class="col-12 col-md-11 col-lg-9 mx-auto mb-4 " [innerHTML]="article.contents | safeHtml"> </div>
 
 <!-- TODO move entire comment block to it's own component -->
 <div class="col-12 col-md-11 col-lg-9 mx-auto">

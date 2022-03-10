@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ArticleFeaturedCardComponent } from './article/article-featured-card/article-featured-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SafeHtmlPipe } from './_pipes/safehtml.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NotFoundComponent,
     FooterComponent,
     ArticleFeaturedCardComponent,
+    SafeHtmlPipe,
   ],
   imports: [
     BrowserModule,
