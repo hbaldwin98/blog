@@ -1,3 +1,5 @@
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { NgxSpinner, NgxSpinnerModule } from 'ngx-spinner';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +12,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ArticleCardComponent } from './article/article-card/article-card.component';
 import { ArticleListComponent } from './article/article-list/article-list.component';
 import { ArticlePageComponent } from './article/article-page/article-page.component';
-
 import { NewArticleComponent } from './article/new-article/new-article.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -45,9 +46,11 @@ import { SafeHtmlPipe } from './_pipes/safehtml.pipe';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
-    EditorModule
+    EditorModule,
+    NgxSpinnerModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+              {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 <a routerLink="login" style="color:black; opacity: 0.05; position:absolute; top: 0;"><i class="fa-solid fa-lock"></i></a>
+<ngx-spinner type="line-scale-party">
+</ngx-spinner>
 
 <div class="btn-group mt-2" style="position:absolute; right: 25px;" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
   <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
