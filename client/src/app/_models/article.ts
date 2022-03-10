@@ -5,6 +5,7 @@ export interface Article {
   urlIdentity: string,
   authorPublicName: string,
   contents: string,
+  headline: string,
   dateCreated: Date,
   dateEdited: Date,
   tags?: string[],

@@ -32,7 +32,6 @@
     <div [ngClass]="{'button-disabled': !commentForm.valid}">
       <button type="submit" [disabled]="!commentForm.valid" class="btn btn-primary mt-3">Post Comment</button>
     </div>
-
   </form>
   <hr>
   <h3 *ngIf="article.comments?.length === 1">{{article.comments.length}} Comment:</h3>

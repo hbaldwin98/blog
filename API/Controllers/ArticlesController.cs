@@ -73,6 +73,7 @@ namespace API.Controllers
                 UrlIdentity = articleDto.Title.ConvertUrl(),
                 Title = articleDto.Title,
                 Contents = articleDto.Contents,
+                Headline = articleDto.Headline,
                 Tags = articleDto.Tags
             };
 

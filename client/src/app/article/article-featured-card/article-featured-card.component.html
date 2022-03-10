@@ -1,27 +1,3 @@
-<!-- TODO Improve U.I. -->
-<!-- <div class="card mx-auto" style="width: 450px; height: 100%;">
-  <a routerLink="/articles/{{article.urlIdentity}}">
-    <div class="row no-gutters">
-      <img src="{{'./assets/default.jpg'}}" alt="{{article.title}}" class="card-img-top">
-    </div>
-  </a>
-
-  <div class="card-body p-1 mt-1 ms-1">
-    <a routerLink="/articles/{{article.urlIdentity}}"><h6 class="card-title mb-1">{{article.title}}</h6></a>
-
-
-  <div class="ms-2">
-    <small class="card-text author font-weight-bold" routerLink="/users/{{article.authorPublicName}}">
-      {{article.authorPublicName}}
-    </small>
-    |
-    <small class="card-text text-muted">
-      {{article.dateCreated | date}}
-    </small>
-  </div>
-</div>
-</div> -->
-
 <div class="card mb-3 mx-auto" style="max-width: 1200px; border: none;">
   <div class="row no-gutters">
     <div class="col my-auto card-img-wrapper">
@@ -30,8 +6,7 @@
     <div class="col-md-6">
       <div class="card-body">
         <a routerLink="/articles/{{article.urlIdentity}}"><h5 class="card-title mb-1">{{article.title}}</h5></a>
-        <!-- TODO Fix headline by adding a headline creation during article or something else... -->
-        <span class="headline" [innerHTML]="(article.contents | slice:0:100 ) + '...'"></span>
+        <span class="headline" [innerHTML]="article.headline || (article.contents | slice:0:100 ) + '...'"></span>
         <br>
         <small class="card-text author text-muted" routerLink="/users/{{article.authorPublicName}}">
           {{article.authorPublicName}}

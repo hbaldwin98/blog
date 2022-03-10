@@ -7,6 +7,7 @@ namespace API.DTOs
         public string AuthorPublicName { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateEdited { get; set; }
+        public string Headline { get; set; }
         public string Contents { get; set; }
         public string Tags { get; set; }
         public ICollection<CommentDto> Comments { get; set; }
