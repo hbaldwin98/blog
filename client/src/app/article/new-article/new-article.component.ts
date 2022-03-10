@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewArticleComponent implements OnInit {
   newArticle: any = {};
+  editor: any;
 
   constructor(private articlesService: ArticlesService, private router: Router) { }
 

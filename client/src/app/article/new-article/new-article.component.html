@@ -13,14 +13,27 @@
   </div>
   <div class="form-group">
     <label for="content">Content</label>
-    <textarea
-        type="text"
-        class="form-control"
-        rows="25"
-        name="contents"
+      <editor
+        apiKey="9blc0qbco7rm0ynpipisymlwhd7pkipzxmdatb5s7grcfb3r"
+        initialValue="<p>Initial content of the editor</p>"
         [(ngModel)]="newArticle.contents"
-        placeholder="Article Content"
-        required></textarea>
+        name="contents"
+        [init]="{
+          height: 500,
+          menubar: false,
+          plugins: [
+            'advlist autolink lists link image charmap print',
+            'preview anchor searchreplace visualblocks code',
+            'fullscreen insertdatetime media table paste',
+            'help wordcount'
+          ],
+          toolbar:
+            'undo redo | formatselect | bold italic | \
+            alignleft aligncenter alignright alignjustify | \
+            bullist numlist outdent indent | help'
+        }"
+      >
+  </editor>
   </div>
   <div class="form-group">
     <label for="tags">Tags</label>
@@ -34,3 +47,4 @@
   </div>
   <button type="submit" class="btn btn-primary mb-3 mt-2" style="width: 100%;" (click)="postArticle()">Post Article</button>
 </form>
+

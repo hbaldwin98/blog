@@ -38,3 +38,8 @@ small.author:hover {
   font-weight: 600;
   cursor:pointer;
 }
+
+:host ::ng-deep .headline * {
+  font-weight: 400;
+  font-size: 16px;
+}

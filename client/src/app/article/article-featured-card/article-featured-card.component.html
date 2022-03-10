@@ -30,7 +30,8 @@
     <div class="col-md-6">
       <div class="card-body">
         <a routerLink="/articles/{{article.urlIdentity}}"><h5 class="card-title mb-1">{{article.title}}</h5></a>
-        <span>{{article.contents | slice:0:100}}...</span>
+        <!-- TODO Fix headline by adding a headline creation during article or something else... -->
+        <span class="headline" [innerHTML]="(article.contents | slice:0:100 ) + '...'"></span>
         <br>
         <small class="card-text author text-muted" routerLink="/users/{{article.authorPublicName}}">
           {{article.authorPublicName}}
