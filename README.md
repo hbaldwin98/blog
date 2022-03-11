@@ -4,8 +4,8 @@
 __Desired Admin Functionalities__
 ---
 1. Name the website from an admin panel
-2. Add and delete articles
-3. Delete comments
+2. Add and delete articles **COMPLETED**
+3. Delete comments **COMPLETED**
 4. Customize the website theme (probably just the color)
 5. Add a custom website icon
 
