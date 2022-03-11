@@ -4,8 +4,27 @@
 * {
   font-family: 'Montserrat', 'Quando';
   font-size: 18px;
-
 }
+/* Palette https://coolors.co/palette/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529
+body, .card {
+  background-color: #212529;
+}
+
+h1, h2, h3, h4, h5, h6, p, hr, label, span, .article-contents {
+  color: #e9ecef;
+}
+
+.form-control {
+  background-color: #e9ecef;
+}
+
+.form-control:focus {
+  background-color: #f8f9fa;
+}
+
+.btn-outline-primary, .btn-outline-danger {
+  background-color: #343a40;
+} */
 
 @media (min-width: 600px) {
   * {
