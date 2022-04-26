@@ -22,6 +22,9 @@
   overflow: hidden;
   position: relative;
   border-radius: 2%;
+
+  padding: 0;
+  margin: 0 15px;
 }
 
 a {

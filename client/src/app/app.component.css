@@ -1,0 +1,9 @@
+.admin {
+  float: right;
+  right: 25px;
+  z-index:10;
+}
+
+.login {
+  color:black; opacity: 0.05; position:absolute; top: 0;
+}

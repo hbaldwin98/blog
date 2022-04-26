@@ -1,8 +1,8 @@
-<a routerLink="login" style="color:black; opacity: 0.05; position:absolute; top: 0;"><i class="fa-solid fa-lock"></i></a>
+<a routerLink="login" class="login"><i class="fa-solid fa-lock"></i></a>
 <ngx-spinner type="line-scale-party">
 </ngx-spinner>
 
-<div class="btn-group mt-2" style="position:absolute; right: 25px;" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+<div class="btn-group admin position-sticky sticky-top pt-3" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
   <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
           aria-controls="dropdown-animated">
     Admin Options<span class="caret"></span>

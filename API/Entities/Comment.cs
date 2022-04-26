@@ -4,7 +4,7 @@ namespace API.Entities
     {
         public int Id { get; set; }
         public string CommenterName { get; set; }
-        public DateTime DateCommented { get; set; } = DateTime.Now;
+        public DateTime DateCommented { get; set; } = DateTime.UtcNow;
         public string Contents { get; set; }
         public int ArticleId { get; set; }
     }

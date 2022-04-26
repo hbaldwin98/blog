@@ -10,8 +10,8 @@ namespace API.Entities
         public string UrlIdentity { get; set; }
         public AppUser Author { get; set; }
         public int AuthorId { get; set; }
-        public DateTime DateCreated { get; set; } = DateTime.Now;
-        public DateTime DateEdited { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public DateTime DateEdited { get; set; } = DateTime.UtcNow;
         public string Headline { get; set; }
         public string Contents { get; set; }
         public string Tags { get; set; }
